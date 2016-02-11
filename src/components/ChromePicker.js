@@ -3,8 +3,7 @@
 import React from 'react';
 import ReactCSS from 'reactcss';
 import merge from 'merge';
-import isPlainObject from 'lodash.isplainobject';
-import debounce from 'lodash.debounce';
+import _ from 'lodash';
 import color from '../helpers/color';
 
 import Chrome from './chrome/Chrome';
@@ -18,13 +17,13 @@ class ColorPicker extends ReactCSS.Component {
       visible: props.display,
     });
 
-    this.debounce = debounce(function(fn: any, data: any) {
+    this.debounce = _.debounce(function(fn: any, data: any) {
       fn(data);
     }, 100);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleHide = this.handleHide.bind(this);
-    this.handleAccept = this.handleAccept.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
 
@@ -90,7 +89,7 @@ class ColorPicker extends ReactCSS.Component {
       'left': this.props.position === 'left' && this.props.display !== null,
       'show': this.state.visible === true,
       'hide': this.state.visible === false,
-      'override': isPlainObject(this.props.positionCSS),
+      'override': _.isPlainObject(this.props.positionCSS),
     });
   }
 
@@ -107,8 +106,21 @@ class ColorPicker extends ReactCSS.Component {
     }
   }
 
-  handleAccept() {
-    this.handleHide();
+  handleSubmit() {
+    if (this.state.visible === true) {
+
+      var colors = {
+        hex: this.state.hex,
+        hsl: this.state.hsl,
+        rgb: this.state.rgb,
+        hsv: this.state.hsv,
+      };
+      alert(colors);
+      this.props.onSubmit && this.props.onSubmit(colors);
+      this.setState({
+        visible: false,
+      });
+    }
   }
 
   handleCancel() {
@@ -139,7 +151,7 @@ class ColorPicker extends ReactCSS.Component {
     return (
       <div is="wrap">
         <div is="picker">
-          <Chrome {...this.props} {...this.state} onChange={ this.handleChange } onAccept={ this.handleAccept } onCancel={ this.handleCancel } />
+          <Chrome {...this.props} {...this.state} onChange={ this.handleChange } onSubmit={ this.handleSubmit } onCancel={ this.handleCancel } />
         </div>
         <div is="cover" onClick={ this.handleHide }/>
       </div>
