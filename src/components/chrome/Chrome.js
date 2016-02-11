@@ -79,6 +79,23 @@ export class Chrome extends ReactCSS.Component {
         Alpha: {
           radius: '2px',
         },
+        buttons: {
+          height: '34px',
+          marginTop: '10px',
+          padding: "11px 0px 0px 33px",
+          borderTop: "1px solid #969696"
+        },
+
+        submitButton: {
+          marginRight: '15px'
+        },
+
+        cancelButton : {
+          fontSize: '12px',
+          lineHeight: '12px',
+          color: '#969696',
+          textDecoration: "underline"
+        },
       },
     };
   }
@@ -111,6 +128,10 @@ export class Chrome extends ReactCSS.Component {
             </div>
           </div>
           <ChromeFields {...this.props} onChange={ this.handleChange } />
+          <div is="buttons">
+            <button is="submitButton" type="button" onClick={this.props.onSubmit}>Select</button>
+            <a href="javascript:void(0)" is="cancelButton" onClick={this.props.onCancel}>Cancel</a>
+          </div>
         </div>
       </div>
     );
