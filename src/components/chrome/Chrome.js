@@ -129,7 +129,7 @@ export class Chrome extends ReactCSS.Component {
           </div>
           <ChromeFields {...this.props} onChange={ this.handleChange } />
           <div is="buttons">
-            <button is="submitButton" type="button" onClick={this.props.onSubmit}>Select</button>
+            <button is="submitButton" type="button" onClick={this.props.onAccept}>Select</button>
             <a href="javascript:void(0)" is="cancelButton" onClick={this.props.onCancel}>Cancel</a>
           </div>
         </div>
