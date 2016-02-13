@@ -23,7 +23,7 @@ class ColorPicker extends ReactCSS.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleHide = this.handleHide.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAccept = this.handleAccept.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
 
@@ -106,20 +106,19 @@ class ColorPicker extends ReactCSS.Component {
     }
   }
 
-  handleSubmit() {
+  handleAccept() {
     if (this.state.visible === true) {
+      this.setState({
+        visible: false,
+      });
 
       var colors = {
         hex: this.state.hex,
         hsl: this.state.hsl,
         rgb: this.state.rgb,
-        hsv: this.state.hsv,
       };
-      alert(colors);
-      this.props.onSubmit && this.props.onSubmit(colors);
-      this.setState({
-        visible: false,
-      });
+      this.props.onAccept && this.props.onAccept({amit: "hello"});
+
     }
   }
 
@@ -151,7 +150,7 @@ class ColorPicker extends ReactCSS.Component {
     return (
       <div is="wrap">
         <div is="picker">
-          <Chrome {...this.props} {...this.state} onChange={ this.handleChange } onSubmit={ this.handleSubmit } onCancel={ this.handleCancel } />
+          <Chrome {...this.props} {...this.state} onChange={ this.handleChange } onAccept={ this.handleAccept } onCancel={ this.handleCancel } />
         </div>
         <div is="cover" onClick={ this.handleHide }/>
       </div>
